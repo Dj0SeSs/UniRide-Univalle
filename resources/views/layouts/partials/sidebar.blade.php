@@ -14,10 +14,26 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        <a class="nav-link" href="{{route('home')}}">
+        <a class="nav-link" href="{{route('dashboard')}}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Inicio</span></a>
+            <span>Inicio</span>
+        </a>
     </li>
+
+    <!-- Nav Item - Viajes (solo Admin) -->
+    @php
+        $user = Auth::user();
+        $role = $user->roles->first()->name ?? null;
+    @endphp
+
+    @if($role === 'Admin')
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('trips.index') }}">
+            <i class="fas fa-bus"></i>
+            <span>Viajes</span>
+        </a>
+    </li>
+    @endif
 
     <!-- Divider -->
     <hr class="sidebar-divider">
@@ -36,7 +52,7 @@
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="buttons.html">
+                <a class="collapse-item" href="{{ route('users.index') }}">
                     <i class="fas fa-users fa-fw"></i> Usuarios
                 </a>
                 <a class="collapse-item" href="cards.html">
@@ -57,12 +73,12 @@
         Addons
     </div>
 
-
     <!-- Nav Item - Tables -->
     <li class="nav-item">
         <a class="nav-link" href="{{route('products.index')}}">
             <i class="fas fa-boxes"></i>
-            <span>Productos</span></a>
+            <span>Productos</span>
+        </a>
     </li>
 
     <!-- Divider -->
