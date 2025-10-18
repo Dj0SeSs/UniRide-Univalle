@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 class CreateRoleUserTable extends Migration
 {
     /**
-     * Run the migrations.
+     * Run the migrations. TABLA PIVOTE
      *
      * @return void
      */
