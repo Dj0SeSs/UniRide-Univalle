@@ -56,6 +56,36 @@ class User extends Authenticatable
     {
         return $this->roles->contains('name', $role);
     }
+
+    /**
+     * Relación uno a muchos con vehículos (solo para conductores)
+     */
+    public function vehicles()
+    {
+        return $this->hasMany(Vehicle::class);
+    }
+
+    /**
+    * Relación uno a muchos con viajes 
+    */
+   public function tripsAsPassenger()
+    {
+    return $this->belongsToMany(Trip::class, 'trip_user')
+                ->withPivot('created_at')
+                ->withTimestamps();
+    }
+
+//  Relación uno a muchos con viajes  conductores
+    // App\Models\User.php
+
+public function tripsAsDriver()
+{
+    return $this->hasMany(\App\Models\Trip::class, 'user_id');
+}
+
+
+ 
+
 }
 
 
