@@ -16,6 +16,54 @@
     <link href="{{ asset('libs/sbadmin/css/sb-admin-2.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
 
+    <style>
+        /* Colores del sidebar para pasajero */
+        .sidebar .sidebar-brand {
+            background-color: #8f1d22 !important; /* rojo */
+        }
+
+        .sidebar .sidebar-brand-text {
+            color: white !important;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .sidebar {
+            background-color: #2e2e2e;
+        }
+
+        /* Botón de usuario con nombre completo y hover rojo */
+        .user-btn {
+            color: #8f1d22 !important;
+            background-color: white !important;
+            border: 2px solid #8f1d22;
+            border-radius: 30px;
+            padding: 6px 14px; /* ancho adaptativo */
+            transition: all 0.3s ease;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap; /* evita que el nombre se corte */
+        }
+
+        .user-btn i {
+            margin-right: 8px;
+            font-size: 20px; /* icono más grande */
+        }
+
+        .user-btn:hover {
+            background-color: #8f1d22 !important;
+            color: white !important;
+            transform: scale(1.05);
+            text-decoration: none;
+        }
+
+        .user-btn:hover i {
+            color: white !important;
+        }
+    </style>
+
     @stack('styles')
 </head>
 <body id="page-top">
@@ -30,16 +78,19 @@
             <!-- Topbar -->
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
+                <!-- Botón menú responsive -->
                 <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                     <i class="fa fa-bars"></i>
                 </button>
 
+                <!-- Menú de usuario con nombre completo -->
                 <ul class="navbar-nav ml-auto">
                     <div class="topbar-divider d-none d-sm-block"></div>
                     <li class="nav-item dropdown no-arrow">
-                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                        <a class="nav-link dropdown-toggle user-btn" href="#" id="userDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
+                            <i class="fas fa-user-circle"></i>
+                            <span class="mr-2 d-lg-inline">{{ Auth::user()->name }}</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                              aria-labelledby="userDropdown">

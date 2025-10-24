@@ -19,7 +19,6 @@ class ConductorTripController extends Controller
      */
     public function index()
     {
-        // Obtenemos solo los viajes del conductor logueado
         $trips = Auth::user()->tripsAsDriver()->orderBy('departure_time')->get();
         return view('conductor.trips.index', compact('trips'));
     }
@@ -45,7 +44,6 @@ class ConductorTripController extends Controller
             'available_seats' => 'required|integer|min:0',
         ]);
 
-        // Crear viaje asociado al conductor
         Auth::user()->tripsAsDriver()->create($request->all());
 
         return redirect()->route('conductor.trips.index')
@@ -57,7 +55,6 @@ class ConductorTripController extends Controller
      */
     public function edit(Trip $trip)
     {
-        // Validar que el viaje pertenezca al conductor
         if ($trip->user_id !== Auth::id()) {
             abort(403, 'No autorizado para editar este viaje.');
         }
@@ -70,7 +67,6 @@ class ConductorTripController extends Controller
      */
     public function update(Request $request, Trip $trip)
     {
-        // Validar que el viaje pertenezca al conductor
         if ($trip->user_id !== Auth::id()) {
             abort(403, 'No autorizado para actualizar este viaje.');
         }
@@ -94,7 +90,6 @@ class ConductorTripController extends Controller
      */
     public function destroy(Trip $trip)
     {
-        // Validar que el viaje pertenezca al conductor
         if ($trip->user_id !== Auth::id()) {
             abort(403, 'No autorizado para eliminar este viaje.');
         }
@@ -104,4 +99,22 @@ class ConductorTripController extends Controller
         return redirect()->route('conductor.trips.index')
                          ->with('success', 'Viaje eliminado correctamente.');
     }
+
+    /**
+     * ✅ Finalizar viaje (nuevo método)
+     */
+    public function finalizar($id)
+{
+    $trip = Trip::findOrFail($id);
+
+    if ($trip->user_id !== Auth::id()) {
+        return back()->with('error', 'No autorizado para finalizar este viaje.');
+    }
+
+    $trip->status = 'Finalizado';
+    $trip->save();
+
+    return back()->with('success', '✅ Viaje finalizado correctamente.');
+}
+
 }

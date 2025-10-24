@@ -19,21 +19,27 @@ class Trip extends Model
         'status',            // opcional: Pendiente o Finalizado
     ];
 
-    // Relación con el conductor
-    public function conductor()
+    // ✅ Relación con el conductor (mejor usar el nombre estándar: driver)
+    public function driver()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function user() {
-    return $this->belongsTo(User::class);
-    }
+    // ❌ Puedes eliminar este, es redundante y causa confusión
+    // public function user() {
+    //     return $this->belongsTo(User::class);
+    // }
 
+    // ✅ Pasajeros del viaje (tabla pivote trip_user)
     public function passengers()
     {
-    return $this->belongsToMany(User::class)->withPivot('created_at')->withTimestamps();
+        return $this->belongsToMany(User::class, 'trip_user', 'trip_id', 'user_id')
+                    ->withTimestamps();
     }
 
-
-
+    // ✅ Reseñas relacionadas con este viaje (opcional pero útil)
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
 }

@@ -44,22 +44,34 @@
                                     <td>{{ $trip->price }}</td>
                                     <td>{{ $trip->available_seats }}</td>
                                     <td>
-                                        @if($isPast)
+                                        @if($trip->status === 'Finalizado')
                                             <span class="badge bg-secondary">Finalizado</span>
                                         @else
-                                            <span class="badge bg-success">A realizar</span>
+                                            <span class="badge bg-success">{{ $trip->status }}</span>
                                         @endif
                                     </td>
                                     <td>
-                                        @if(!$isPast)
+                                        @if($trip->status !== 'Finalizado')
+                                            <!-- Botón editar -->
                                             <a href="{{ route('conductor.trips.edit', $trip) }}" class="btn btn-sm btn-warning">
                                                 <i class="fas fa-edit"></i> Editar
                                             </a>
+
+                                            <!-- Botón eliminar -->
                                             <form action="{{ route('conductor.trips.destroy', $trip) }}" method="POST" class="d-inline">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button class="btn btn-sm btn-danger" onclick="return confirm('¿Eliminar viaje?')">
                                                     <i class="fas fa-trash"></i> Eliminar
+                                                </button>
+                                            </form>
+
+                                            <!-- ✅ Botón Finalizar (ahora SI correcto) -->
+                                            <form action="{{ route('conductor.trips.finalizar', $trip->id) }}" method="POST" class="d-inline">
+                                                @csrf
+                                                <!-- ❌ SE ELIMINÓ @method('PUT') -->
+                                                <button type="submit" class="btn btn-sm btn-success" onclick="return confirm('¿Marcar viaje como Finalizado?')">
+                                                    <i class="fas fa-check"></i> Finalizar
                                                 </button>
                                             </form>
                                         @else
