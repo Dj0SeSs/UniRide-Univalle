@@ -63,26 +63,30 @@ Route::middleware('auth')->group(function () {
     Route::resource('/trips', TripController::class);
 
     // ✅ Rutas Conductor
-    Route::prefix('conductor')->name('conductor.')->group(function () {
-        Route::get('/vehicles', [VehicleController::class, 'index'])->name('vehicles.index');
-        Route::get('/vehicles/create', [VehicleController::class, 'create'])->name('vehicles.create');
-        Route::post('/vehicles', [VehicleController::class, 'store'])->name('vehicles.store');
-        Route::get('/vehicles/{vehicle}/edit', [VehicleController::class, 'edit'])->name('vehicles.edit');
-        Route::put('/vehicles/{vehicle}', [VehicleController::class, 'update'])->name('vehicles.update');
-        Route::delete('/vehicles/{vehicle}', [VehicleController::class, 'destroy'])->name('vehicles.destroy');
+    // ✅ Rutas Conductor
+Route::prefix('conductor')->name('conductor.')->group(function () {
 
-        Route::get('/trips', [ConductorTripController::class, 'index'])->name('trips.index');
-        Route::get('/trips/create', [ConductorTripController::class, 'create'])->name('trips.create');
-        Route::post('/trips', [ConductorTripController::class, 'store'])->name('trips.store');
-        Route::get('/trips/{trip}/edit', [ConductorTripController::class, 'edit'])->name('trips.edit');
-        Route::put('/trips/{trip}', [ConductorTripController::class, 'update'])->name('trips.update');
-        Route::delete('/trips/{trip}', [ConductorTripController::class, 'destroy'])->name('trips.destroy');
+    // 🚗 Vehículos
+    Route::get('/vehicles', [VehicleController::class, 'index'])->name('vehicles.index');
+    Route::get('/vehicles/create', [VehicleController::class, 'create'])->name('vehicles.create');
+    Route::post('/vehicles', [VehicleController::class, 'store'])->name('vehicles.store');
+    Route::get('/vehicles/{vehicle}/edit', [VehicleController::class, 'edit'])->name('vehicles.edit');
+    Route::put('/vehicles/{vehicle}', [VehicleController::class, 'update'])->name('vehicles.update');
+    Route::delete('/vehicles/{vehicle}', [VehicleController::class, 'destroy'])->name('vehicles.destroy');
 
-        // ✅ Ruta para finalizar viaje
-        Route::post('/trips/{id}/finalizar', [ConductorTripController::class, 'finalizar'])
-    ->name('conductor.trips.finalizar');
+    // 🛣️ Viajes
+    Route::get('/trips', [ConductorTripController::class, 'index'])->name('trips.index');
+    Route::get('/trips/create', [ConductorTripController::class, 'create'])->name('trips.create');
+    Route::post('/trips', [ConductorTripController::class, 'store'])->name('trips.store');
+    Route::get('/trips/{trip}/edit', [ConductorTripController::class, 'edit'])->name('trips.edit');
+    Route::put('/trips/{trip}', [ConductorTripController::class, 'update'])->name('trips.update');
+    Route::delete('/trips/{trip}', [ConductorTripController::class, 'destroy'])->name('trips.destroy');
 
-    });
+    // ✅ Ruta para finalizar viaje (solo POST)
+    Route::post('/trips/{trip}/finalizar', [ConductorTripController::class, 'finalizar'])
+         ->name('trips.finalizar');
+});
+
 
     // ✅ Rutas Pasajero
     Route::prefix('pasajero')->name('pasajero.')->group(function () {

@@ -104,18 +104,17 @@ class ConductorTripController extends Controller
      * ✅ Finalizar viaje (nuevo método)
      */
     public function finalizar($id)
-    {
-        $trip = Trip::findOrFail($id);
+{
+    $trip = Trip::findOrFail($id);
 
-        // Validar que el viaje sea del conductor actual
-        if ($trip->user_id !== Auth::id()) {
-            return back()->with('error', 'No puedes finalizar un viaje que no es tuyo.');
-        }
-
-        // Cambiar el estado a "Finalizado"
-        $trip->status = 'Finalizado';
-        $trip->save();
-
-        return back()->with('success', '✅ El viaje ha sido finalizado correctamente.');
+    if ($trip->user_id !== Auth::id()) {
+        return back()->with('error', 'No autorizado para finalizar este viaje.');
     }
+
+    $trip->status = 'Finalizado';
+    $trip->save();
+
+    return back()->with('success', '✅ Viaje finalizado correctamente.');
+}
+
 }

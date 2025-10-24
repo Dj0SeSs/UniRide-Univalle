@@ -52,12 +52,12 @@
                                     </td>
                                     <td>
                                         @if($trip->status !== 'Finalizado')
-                                            <!-- Botón para editar -->
+                                            <!-- Botón editar -->
                                             <a href="{{ route('conductor.trips.edit', $trip) }}" class="btn btn-sm btn-warning">
                                                 <i class="fas fa-edit"></i> Editar
                                             </a>
 
-                                            <!-- Botón para eliminar -->
+                                            <!-- Botón eliminar -->
                                             <form action="{{ route('conductor.trips.destroy', $trip) }}" method="POST" class="d-inline">
                                                 @csrf
                                                 @method('DELETE')
@@ -66,13 +66,14 @@
                                                 </button>
                                             </form>
 
-                                            <!-- Botón para marcar como Finalizado -->
-                                            <form action="{{ route('conductor.trips.finalizar', $trip->id) }}" method="POST">
-    @csrf
-    @method('PUT')  <!-- ❌ Esto provoca el error -->
-    <button type="submit">Finalizar</button>
-</form>
-
+                                            <!-- ✅ Botón Finalizar (ahora SI correcto) -->
+                                            <form action="{{ route('conductor.trips.finalizar', $trip->id) }}" method="POST" class="d-inline">
+                                                @csrf
+                                                <!-- ❌ SE ELIMINÓ @method('PUT') -->
+                                                <button type="submit" class="btn btn-sm btn-success" onclick="return confirm('¿Marcar viaje como Finalizado?')">
+                                                    <i class="fas fa-check"></i> Finalizar
+                                                </button>
+                                            </form>
                                         @else
                                             <span class="text-muted">No disponible</span>
                                         @endif
