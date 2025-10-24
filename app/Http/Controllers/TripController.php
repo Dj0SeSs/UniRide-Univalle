@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Trip;
+use Illuminate\Support\Facades\Auth;
+
 
 class TripController extends Controller
 {
@@ -53,4 +55,21 @@ class TripController extends Controller
         $trip->delete();
         return redirect()->route('trips.index')->with('success', 'Viaje eliminado correctamente.');
     }
+
+    public function finalizar($id)
+{
+    $trip = Trip::findOrFail($id);
+
+    // Verificar que el usuario logueado es el conductor
+    if ($trip->user_id !== Auth::id()) {
+        return back()->with('error', 'No tienes permiso para finalizar este viaje.');
+    }
+
+    // Actualizar estado a Finalizado
+    $trip->status = 'Finalizado';
+    $trip->save();
+
+    return back()->with('success', '✅ El viaje ha sido marcado como finalizado.');
+}
+
 }

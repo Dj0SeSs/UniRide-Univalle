@@ -32,5 +32,12 @@
         </a>
     </li>
 
+    <!-- Reseñas de Viajes -->
+    <li class="nav-item">
+        <a href="{{ route('pasajero.resenas') }}" class="nav-link">
+            <i class="fa fa-star"></i> Reseñas de Viajes
+        </a>
+    </li>
+
     <hr class="sidebar-divider d-none d-md-block">
 </ul>

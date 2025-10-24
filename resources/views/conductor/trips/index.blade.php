@@ -44,17 +44,20 @@
                                     <td>{{ $trip->price }}</td>
                                     <td>{{ $trip->available_seats }}</td>
                                     <td>
-                                        @if($isPast)
+                                        @if($trip->status === 'Finalizado')
                                             <span class="badge bg-secondary">Finalizado</span>
                                         @else
-                                            <span class="badge bg-success">A realizar</span>
+                                            <span class="badge bg-success">{{ $trip->status }}</span>
                                         @endif
                                     </td>
                                     <td>
-                                        @if(!$isPast)
+                                        @if($trip->status !== 'Finalizado')
+                                            <!-- Botón para editar -->
                                             <a href="{{ route('conductor.trips.edit', $trip) }}" class="btn btn-sm btn-warning">
                                                 <i class="fas fa-edit"></i> Editar
                                             </a>
+
+                                            <!-- Botón para eliminar -->
                                             <form action="{{ route('conductor.trips.destroy', $trip) }}" method="POST" class="d-inline">
                                                 @csrf
                                                 @method('DELETE')
@@ -62,6 +65,14 @@
                                                     <i class="fas fa-trash"></i> Eliminar
                                                 </button>
                                             </form>
+
+                                            <!-- Botón para marcar como Finalizado -->
+                                            <form action="{{ route('conductor.trips.finalizar', $trip->id) }}" method="POST">
+    @csrf
+    @method('PUT')  <!-- ❌ Esto provoca el error -->
+    <button type="submit">Finalizar</button>
+</form>
+
                                         @else
                                             <span class="text-muted">No disponible</span>
                                         @endif

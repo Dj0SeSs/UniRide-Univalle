@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
 
     <style>
-        /* 🎨 Colores del sidebar para pasajero */
+        /* Colores del sidebar para pasajero */
         .sidebar .sidebar-brand {
             background-color: #8f1d22 !important; /* rojo */
         }
