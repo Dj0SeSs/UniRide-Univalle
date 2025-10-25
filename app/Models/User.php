@@ -11,81 +11,60 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'name',
         'email',
         'password',
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
 
-    /**
-     * Relación muchos a muchos con roles
-     */
+    /* ============================
+     * ✅ RELACIONES
+     * ============================ */
+
+    // ✅ Relación muchos a muchos con roles
     public function roles()
     {
         return $this->belongsToMany(Role::class);
     }
 
-    /**
-     * Verifica si el usuario tiene un rol específico
-     */
+    // ✅ Verificar si el usuario tiene un rol específico
     public function hasRole($role)
     {
         return $this->roles->contains('name', $role);
     }
 
-    /**
-     * Relación uno a muchos con vehículos (solo para conductores)
-     */
+    // ✅ Vehículos registrados por el usuario (si es conductor)
     public function vehicles()
     {
         return $this->hasMany(Vehicle::class);
     }
 
-    /**
-    * Relación uno a muchos con viajes 
-    */
-   public function tripsAsPassenger()
+    // ✅ Viajes donde el usuario fue PASAJERO (tabla pivote trip_user)
+    public function tripsAsPassenger()
     {
-    return $this->belongsToMany(Trip::class, 'trip_user')
-                ->withPivot('created_at')
-                ->withTimestamps();
+        return $this->belongsToMany(Trip::class, 'trip_user', 'user_id', 'trip_id')
+                    ->withTimestamps();
     }
 
-//  Relación uno a muchos con viajes  conductores
-    // App\Models\User.php
+    // ✅ Alias para acceder a los viajes como pasajero usando $user->trips
+    public function trips()
+    {
+        return $this->tripsAsPassenger();
+    }
 
-public function tripsAsDriver()
-{
-    return $this->hasMany(\App\Models\Trip::class, 'user_id');
+    // ✅ Viajes donde el usuario es CONDUCTOR
+    // ⚠ Asegúrate de que en tu tabla `trips`, el conductor se almacene en la columna 'user_id'
+    public function tripsAsDriver()
+    {
+        return $this->hasMany(Trip::class, 'user_id');
+    }
 }
-
-
- 
-
-}
-
-

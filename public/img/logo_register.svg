@@ -1,0 +1,26 @@
+<svg width="220" height="48" viewBox="0 0 220 48" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="UniRide">
+  <defs>
+    <style>
+      .red{fill:#8f1d22;}       /* rojo base (juego con tu UI) */
+      .dark{fill:#6b1216;}      /* rojo oscuro */
+      .txt{fill:#111827;}       /* texto casi negro */
+      .w{fill:#ffffff;}
+    </style>
+  </defs>
+
+  <!-- Icono: cuadrado rojo con U + “destino” -->
+  <g transform="translate(2,2)">
+    <rect x="0" y="0" width="44" height="44" rx="10" class="red"></rect>
+    <!-- triángulo invertido (destino / ride) -->
+    <path d="M32 10 L40 24 L24 24 Z" class="w"></path>
+    <!-- U en negativo -->
+    <path d="M6 10 v12 a9 9 0 0 0 18 0 v-6 h-6 v6 a3 3 0 1 1 -6 0 v-12 z" class="w"></path>
+    <circle cx="32" cy="14" r="3.2" class="dark"></circle>
+  </g>
+
+  <!-- Wordmark -->
+  <g transform="translate(56,14)">
+    <text class="txt" font-family="Nunito, Segoe UI, Roboto, Arial" font-size="20" font-weight="800">UniRide</text>
+    <text class="txt" opacity=".60" font-family="Nunito, Segoe UI, Roboto, Arial" font-size="11" y="20">Conecta · Comparte · Llega seguro</text>
+  </g>
+</svg>

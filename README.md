@@ -1,6 +1,15 @@
 # UNIRIDE UNIVALLE
 
- Usuarios
+Descripcion:
+
+### Links repositorio
+
+ * Github: `https://github.com/jcwirko/Return-app`
+ * SSH: `git@github.com:jcwirko/Return-app.git`
+ * HTTPS:  `https://github.com/jcwirko/Return-app.git`
+ 
+
+# Usuarios
 
 ### Administrador 
 → admin@uniride.com
